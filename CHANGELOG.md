@@ -1,15 +1,18 @@
 # Changelog
 
-Changes to the Dashboard Chat Builder kit. These entries describe local drafts; they are not public release tags.
+## v0.3 candidate — 2026-11-10
 
-## v0.2 draft — 2026-11-08 (unreleased)
+- Renamed the product presentation to Dashboard + Chat Kit while retaining the `dropkit-1` repository and its history.
+- Added a tested local preview with fictional data, CSV validation and recovery, source-backed deterministic answers, and keyboard-accessible table scrolling.
+- Added a measured test report and reusable run-results template.
+- Corrected the checklist to match the tested question form, not a button-only interface.
+- Kept separate MIT code and CC BY 4.0 documentation terms.
 
-- Added a README for the kit's purpose, quick start, file guide and verification limits.
-- Added a design-research method and a separate project-planning path; neither claims completed research or a tested cross-workspace workflow.
+## v0.2 draft — 2026-11-08
+
+- Added a README, a design-research method, and a separate project-planning path.
 - Bounded the fictional sample to a self-contained local dashboard with two deterministic questions and a synthetic CSV.
-- Added checks for totals, filtering, source rows, unsupported questions and invalid inputs.
-- Specified horizontal table keyboard behavior: focused-wrapper ArrowLeft/ArrowRight scrolling and Home/End edge navigation, with no interception when focus is elsewhere.
-- Added separate MIT terms for code and CC BY 4.0 terms for original documentation, prompts, research notes and fictional sample data.
-- A fresh sample output passed Node logic and static responsive-CSS checks. Its browser/mobile runtime, direct `file://` opening, physical-device use, screen-reader behavior, other coding workspaces and production deployment remain unverified.
+- Added checks for totals, filtering, source rows, unsupported questions, invalid inputs, keyboard navigation, and project-planning boundaries.
+- Specified separate MIT terms for code and CC BY 4.0 terms for original documentation, prompts, research notes, and fictional sample data.
 
-These are local draft changes; the v0.2 package has not been published or tagged.
+The v0.3 candidate is not a tagged release. The test report describes one sample output and does not establish compatibility with other workspaces or production readiness.
