@@ -1,21 +1,18 @@
 # Acceptance checks
 
-Record each item as passed, failed or not run, with evidence.
+Record each item as passed, failed, or not run, with actual evidence.
 
-1. The fictional sample loads; show its source and indicate it is fictional.
-2. A total equals the sum of the visible rows; report the row IDs and formula. With all sample rows, `orders` totals **20** and `revenue_usd` totals **270**. North alone has **12** orders and **160 USD** revenue.
-3. Changing the region filter changes both metrics and the data available to chat. Clear the filter and verify totals return.
-4. An unsupported question receives an honest unknown response. Missing values and malformed data are identified rather than silently treated as zero. If no model is configured, supported demo questions and the non-AI status are visible.
-5. Confirm each answer gives its relevant source rows or aggregation and distinguishes calculated facts from model-generated explanation.
-6. Test empty data and an invalid file. Show a useful error without revealing secrets.
-7. At 320 CSS px and 390 CSS px, check that the document itself has no horizontal overflow; wide tables may scroll only inside their labeled, keyboard-focusable table wrapper. With that wrapper focused, verify ArrowLeft/ArrowRight scroll it in both directions and Home/End reach both edges; verify those keys are not intercepted when focus is elsewhere. Check keyboard navigation through the filter, file input, question buttons and form. Report the actual browser, viewport and results.
-8. For real users, test authentication, authorization, isolation, logging and data handling in the intended environment. A synthetic preview does not establish production readiness.
+1. The fictional sample loads; its source and fictional-data status are visible.
+2. Each total equals the sum of visible rows, with source IDs or formula. All rows: 20 orders and USD 270 revenue. North only: 12 orders and USD 160 revenue.
+3. Changing the region filter changes both metrics and available source rows. Clearing it restores the all-row totals.
+4. An unsupported question receives an honest response. Missing, malformed, or empty data is identified rather than silently treated as zero. The non-AI status is visible.
+5. Answers show relevant source rows or aggregation and distinguish calculated facts from generated explanations.
+6. Test a valid file, malformed file, and empty file. Errors should be useful and must not expose secrets. Verify recovery after an invalid selection.
+7. At 320px and 390px CSS widths, verify no document-level horizontal overflow. A wide table may scroll inside a labeled, keyboard-focusable wrapper. With it focused, ArrowLeft/ArrowRight should scroll in both directions and Home/End should reach both edges. Verify unrelated fields keep their usual key behavior. Test keyboard order through the filter, file input, table, question field, and Ask control. Record browser and viewport.
+8. For real users, test authentication, authorization, isolation, logging, and data handling in the intended environment. A synthetic preview does not establish production readiness.
+9. For model-backed chat, test natural-language questions, evidence accuracy, filter enforcement, and unsupported answers with the configured provider. Record whether a model was invoked; a rule-based example cannot pass this check.
+10. For UI research, verify pages were opened, links and access dates recorded, reuse terms distinguished from assumptions, and design decisions linked to user tasks. If browsing was unavailable, label research incomplete. Check the mockup narrowly and by keyboard.
+11. Before adapting a project, confirm the exact target and active tool-enforced read-only planning mode. Record the proposal, pre-existing Git status, and protected file hashes. Pass only if planning creates or modifies no files and proposes exact paths, dependencies, checks, and recovery. If the mode cannot be confirmed, mark not run and stop before adaptation.
+12. Open the generated `dashboard.html` directly from disk with no local server, package, or network. Confirm embedded rows load, supported question intents calculate correctly, and an unsupported question is identified. Record browser and actual result. If direct opening fails, report the blocker instead of adding an unapproved dependency.
 
-9. For model-backed chat, separately test natural-language questions, evidence accuracy, filter enforcement and unsupported answers with the actual configured provider. Report whether a model was invoked; a rule-based demo cannot pass this check.
-10. For UI research, verify referenced pages were actually opened, links and access dates recorded, reuse conditions distinguished from assumptions, and chosen design decisions linked to user tasks. If browsing was unavailable, label the research incomplete. Check the chosen mockup on a narrow viewport and by keyboard; report actual observations.
-
-11. Before adapting an existing project, confirm the exact target and active tool-enforced read-only planning mode. Record the proposal, pre-existing Git status and protected file hashes. Pass only if planning completes without file creation/modification or an unauthorized command, and the exact proposed paths, dependencies, checks and recovery are reviewable. If the mode cannot be confirmed, record **not run** and do not open the target for adaptation. Do not infer protection from the prompt wording alone.
-
-12. Open the generated `dashboard.html` directly from disk in a browser with no local server, installed package or network connection. Confirm the embedded fictional rows load and exactly the two supported question buttons work. Record the browser and actual result; if the agent-generated file requires a server, dependency or network access, mark this requirement failed and explain why.
-
-List the generated files, exact steps used, untested items and any services or costs required. Ask the user to review before deployment.
+List generated files, exact steps, untested items, and any services or costs. Request review before deploying an adapted application.

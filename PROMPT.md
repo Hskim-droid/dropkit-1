@@ -5,7 +5,7 @@ First identify the selected path: (A) fictional sample preview or (B) planning a
 ## A. Fictional sample preview
 
 - Work only in a disposable copy of this kit; do not edit the publisher's website checkout or a real project.
-- Read `START.md`, `CHECKS.md` and `sample.csv`.
+- Read `START.md`, `CHECKS.md`, `RESULTS-TEMPLATE.md` and `sample.csv`.
 - Create a single self-contained `dashboard.html` with inline CSS and JavaScript. Embed the four fictional sample rows so it opens directly from a local file in a browser. Do not require an installed package, CDN, local server, model API, real data, external service, database, authentication or deployment.
 - Show the data source, fictional-data notice, units, metric definitions, active filter and last-updated state. Make totals derive from the visible rows.
 - Provide a CSV file picker for a user-selected local file; parse it in the browser without transmitting its contents. Keep the required columns/order from `sample.csv` and show useful errors for malformed or empty files.
@@ -13,6 +13,7 @@ First identify the selected path: (A) fictional sample preview or (B) planning a
 - At 320 CSS px and 390 CSS px, keep the document itself free of horizontal overflow. A wide data table may scroll only inside its labeled, keyboard-focusable wrapper. When that wrapper has focus, ArrowLeft and ArrowRight move it horizontally by a useful step; Home and End move to its left and right edges. Do not capture these keys when focus is elsewhere. Give the wrapper an accessible name and a short visible or programmatically available hint for these keys. Keep a visible keyboard focus indicator.
 - If direct local-file use cannot be supported by the available browser, explain the blocker instead of silently introducing a package, CDN or server.
 - Report generated paths and the actual acceptance checks that ran. Do not claim model-backed chat.
+- Record the run in `RESULTS-TEMPLATE.md`; label every check passed, failed, or not run with concise evidence and limits.
 
 ## B. Existing-project plan
 

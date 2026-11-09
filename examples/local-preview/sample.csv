@@ -1,0 +1,5 @@
+id,date,region,orders,revenue_usd
+1,2026-01-01,North,5,60
+2,2026-01-01,South,3,40
+3,2026-01-02,North,7,100
+4,2026-01-02,South,5,70

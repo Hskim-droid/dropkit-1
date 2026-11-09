@@ -1,33 +1,33 @@
-# DropKit 1 · Dashboard Chat Builder
+# Dashboard + Chat Kit
 
-A file-based kit for asking an AI coding workspace to build a local dashboard preview from fictional CSV data.
+A file-based kit for building a local dashboard preview and planning a dashboard for an existing project. It uses an AI coding workspace; this repository is not a finished application or hosted chatbot.
 
-This download is the kit, not a finished dashboard, AI chatbot, model connection, database or hosted service. Its sample asks the generated preview to support exactly two deterministic questions: **Total orders** and **Total revenue**.
+## Start
 
-## Quick start
+1. Clone or download this repository.
+2. Open the folder in an AI coding workspace that can read and create files.
+3. Ask it to read `START.md` and follow the sample or existing-project path.
+4. Review the result with `CHECKS.md`; record actual evidence in `RESULTS-TEMPLATE.md`.
 
-1. Copy this folder into a disposable workspace. Keep the sample away from a real application repository.
-2. Open the folder in a coding workspace that can read its files. If it does not load project instructions automatically, ask it to read `START.md`, `PROMPT.md`, `CHECKS.md` and `sample.csv`, then confirm it has done so before it edits.
-3. Ask it to create the fictional sample preview described in `START.md` and `PROMPT.md`.
-4. Review the result against `CHECKS.md`. Keep any real-project adaptation on its separate planning path.
+## Kit contents
 
-## Files
+- `START.md` — two bounded ways to use the kit.
+- `PROMPT.md` — copyable instructions for the workspace.
+- `sample.csv` — four fictional records for the local preview.
+- `PROJECT-BRIEF.md`, `DESIGN-RESEARCH.md` — inputs and research method for an existing project.
+- `CHECKS.md`, `RESULTS-TEMPLATE.md` — acceptance criteria and run record.
+- `examples/local-preview/` — a tested, self-contained example and valid, invalid, and empty CSV inputs.
+- `TEST-REPORT.md` — actual test environment, results, and limits.
+- `LICENSE` and `LICENSE-DOCUMENTATION.md` — separate code and documentation terms.
 
-- `README.md` — purpose, quick start, file guide and current verification limits.
-- `START.md` — the sample and existing-project paths.
-- `PROMPT.md` — the bounded build request and project-planning rules.
-- `PROJECT-BRIEF.md` — questions to resolve before adapting a real project.
-- `sample.csv` — four fictional records.
-- `CHECKS.md` — expected totals and checks for filters, errors, evidence and access.
-- `DESIGN-RESEARCH.md` — a method for researching a specific dashboard task; it is not a completed research result or a preapproved design.
-- `CHANGELOG.md` — dated draft changes and verification scope.
-- `LICENSE` — MIT terms for code files in this kit and code examples separated from prose.
-- `LICENSE-DOCUMENTATION.md` — CC BY 4.0 terms for original prose, prompts, research notes and fictional sample data.
+## What the example does
 
-## Current verification
+The example opens directly from disk. It calculates order and revenue totals from fictional rows, filters by region, cites source row IDs, accepts a local CSV, reports invalid input, and gives an explicit response to unsupported questions. It does not invoke a model or connect to a database, account, API, or service.
 
-A first fictional preview matching the one-file, two-question contract passed Node logic checks but overflowed at 320 CSS px (522px document width); this review manually fixed the grid panel's minimum width. The corrected preview passed isolated browser checks at 320, 390 and 1440 CSS px, keyboard focus checks, CSV sample loading, and a malformed-CSV error check. A separate fresh Codex output passed Node logic and static responsive-CSS checks before this draft added the table keyboard contract. Source inspection shows that output does not implement the new table-key behavior; it must not be treated as passing the current checks. Available browser tools reject direct `file://` navigation, so opening the output directly from disk remains unverified. Physical-device and screen-reader use, other coding workspaces, model-backed chat, real-project planning and production deployment have not been verified. Documentation support in a tool does not establish that this kit is compatible with it.
+## Verification
+
+The example was opened from a local file and tested in headless Chrome on a Mac mini at 320px, 390px, and 1440px CSS widths. `TEST-REPORT.md` records observed checks and limits. Physical mobile devices, screen readers, other browsers and workspaces, model integrations, real data, and production deployment have not been tested.
 
 ## License
 
-Code files and code examples are licensed under the MIT License in `LICENSE`. Original prose, prompts, research notes and the fictional `sample.csv` are licensed under CC BY 4.0 as described in `LICENSE-DOCUMENTATION.md`. Third-party names, marks, linked sources and materials are not relicensed by these notices. The generated dashboard is an output of a user's coding workspace and is not bundled here; its authorship and license must be decided for that output separately.
+Kit code and code examples are MIT licensed. Original documentation, prompts, research notes, and fictional sample data are CC BY 4.0. The generated example dashboard is covered by the code license. These terms do not establish the license of dashboards generated by other users or coding workspaces. See the notices for attribution and exclusions.

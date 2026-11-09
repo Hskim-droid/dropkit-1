@@ -1,28 +1,28 @@
-# Dashboard Chat Builder · start here
+# Dashboard + Chat Kit · Start here
 
-This file-based kit helps an AI coding workspace create a fictional local dashboard preview, then plan an adaptation for a real project. It is not a finished app, AI chatbot or hosted service.
+This is a file-based kit for an AI coding workspace. Pick one path and keep it separate from the other.
 
-## Choose one path
+## A. Build the fictional local preview
 
-### A. Make the fictional sample preview
+1. Copy or clone this kit into a disposable folder. Do not use a real application repository as the sample destination.
+2. Open that folder in an AI coding workspace that can read the kit and create files.
+3. Ask it to read `START.md`, `PROMPT.md`, `CHECKS.md`, and `sample.csv`, then follow path A in `PROMPT.md`.
+4. Review the generated `dashboard.html` against `CHECKS.md`. Record the exact run, environment, evidence, and limits in `RESULTS-TEMPLATE.md`.
 
-1. Copy this kit into a disposable folder. Do not use the website source checkout or a real application repository as the sample destination.
-2. Open that disposable folder in a coding workspace that can read the kit files and create a local preview.
-3. Ask it to read `START.md`, `PROMPT.md`, `CHECKS.md` and `sample.csv`, and build the fictional sample only in this disposable folder.
-4. The intended artifact is one self-contained `dashboard.html` that opens directly in a browser without installing packages or starting a server. It should offer only **Total orders** and **Total revenue** as rule-based questions. Review the generated file and record which checks actually ran. The expected all-row totals are 20 orders and USD 270 revenue; North alone is 12 orders and USD 160.
+The expected totals are 20 orders and USD 270 revenue. North alone has 12 orders and USD 160 revenue. The local sample supports only the “Total orders” and “Total revenue” question intents. Other questions should be identified as unsupported. No model, API, server, package, or real data is required.
 
-No model API, real dataset, external service or deployment is needed for the intended non-AI sample. A first sample matching this one-file/two-question contract passed Node logic checks but had document-level overflow at 320 CSS px (522px document width); this review manually fixed the grid panel's minimum width. An isolated browser review of that corrected sample at 320, 390 and 1440 CSS px confirmed no document-level overflow; the wide table scrolled only inside its focusable wrapper. Keyboard focus and the sample CSV picker were also checked; a malformed CSV showed a row-specific error and preserved valid prior data. A separate fresh Codex output from the revised prompt now passes Node logic and static responsive-CSS checks and includes the grid min-width guard; that new output has not received browser/runtime checks. Available browser tools reject direct `file://` navigation, so opening either output directly from disk remains unverified. Physical devices, screen readers and other coding workspaces remain unverified. If the workspace proposes a package, CDN or server, stop and explain why before adding it.
+A fresh sample generated from this kit was opened directly from disk and tested in Chrome 147 headless on a Mac mini. The generated preview passed 29 dashboard checks, including CSV recovery, calculations, filters, keyboard behavior, and 320px / 390px / 1440px viewport checks. See `TEST-REPORT.md` for exact scope. This result describes that one sample run only.
 
-### B. Plan an adaptation for an existing project
+## B. Plan a dashboard for an existing project
 
-1. Open the user's target application as the working project. Attach or copy the DropKit kit files as reference context; do not choose the DropKit product repository as the working target for the app.
-2. Fill `PROJECT-BRIEF.md` with synthetic or otherwise approved information. Follow `DESIGN-RESEARCH.md` only for the specific user task.
-3. Request a read-only plan with exact paths/actions, existing edits to preserve, data assumptions, dependencies/costs, checks, risks and recovery.
-4. Verify the coding workspace is in a genuine read-only planning mode. A prompt saying “do not edit” is not a technical lock. If the mode cannot be confirmed or existing edits cannot be protected, use a disposable clone or stop before adaptation.
-5. Approve only a specific proposal. Recheck the target state, apply only that scope, then review the diff and actual results.
+1. Open the intended application as the target project. Attach this kit as reference material; do not select the kit repository as the application.
+2. Fill `PROJECT-BRIEF.md` with approved information. Follow `DESIGN-RESEARCH.md` for the specific user task.
+3. Ask for a read-only proposal listing exact paths, current edits to preserve, data and access assumptions, dependencies, checks, risks, and recovery.
+4. Confirm that the workspace enforces read-only planning. Prompt wording alone is not a technical lock. If it cannot be confirmed, stop before adapting files.
+5. Review and approve a specific plan, then implement only that scope in an isolated, reviewable change.
 
-This adaptation process is proposed guidance and has not been validated across coding workspaces. Never put API keys in kit files or browser code. Model access, databases, authentication, paid services, real data and deployment need separate decisions.
+This planning path has not been validated across coding workspaces. It does not grant access to a repository, dataset, model, database, account, paid service, or deployment. Never put API keys in kit files or browser code.
 
-## What is and is not verified
+## Limits
 
-The checklist is a guide for recording actual results, not evidence that every check passed. Direct `file://` opening, browser/runtime checks for the fresh generation, physical-device use, screen-reader behavior, other workspaces, model-backed answers, the existing-project plan path and deployment have not been verified.
+The example is a local, deterministic preview, not an AI chatbot or production-ready app. Real data handling, authentication, authorization, isolation, model-backed answers, databases, deployment, physical-device behavior, screen readers, and other coding workspaces require separate checks.

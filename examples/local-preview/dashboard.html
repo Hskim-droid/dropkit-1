@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard + Chat Kit · fictional sample</title>
+  <style>
+    :root { color-scheme: light; font: 16px/1.5 system-ui, sans-serif; color: #202124; background: #fff; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 1rem; max-width: 980px; min-width: 0; margin-inline: auto; }
+    header, main, section, form { min-width: 0; }
+    h1 { font-size: clamp(1.35rem, 5vw, 2rem); line-height: 1.2; }
+    .scope, .hint, .status { color: #555; }
+    .metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; margin-block: 1rem; }
+    .metric, .panel { border: 1px solid #bbb; border-radius: .5rem; padding: .75rem; min-width: 0; }
+    .metric strong { display: block; font-size: 1.35rem; }
+    .controls { display: flex; flex-wrap: wrap; gap: .75rem; align-items: end; }
+    label { display: grid; gap: .25rem; min-width: 0; max-width: 100%; }
+    input, select, button { font: inherit; min-height: 2.75rem; max-width: 100%; }
+    #csv-file { width: min(22rem, calc(100vw - 3rem)); min-width: 0; max-width: 100%; }
+    .panel { margin-block: 1rem; }
+    .table-scroll { max-width: 100%; min-width: 0; overflow-x: auto; border: 1px solid #aaa; }
+    .table-scroll:focus-visible { outline: 3px solid #245bb3; outline-offset: 2px; }
+    table { border-collapse: collapse; min-width: 650px; width: 100%; }
+    th, td { text-align: left; padding: .5rem .65rem; border-bottom: 1px solid #ddd; white-space: nowrap; }
+    th { background: #f2f3f5; }
+    .chat-log { min-height: 3rem; padding: .5rem; background: #f7f7f7; overflow-wrap: anywhere; }
+    .error { color: #9b1c1c; }
+    @media (max-width: 360px) { body { padding: .75rem; } .metric { padding: .5rem; } }
+  </style>
+</head>
+<body>
+  <header>
+    <p class="scope">Fictional CSV preview · Local only · No model connection</p>
+    <h1>Northwind sample dashboard</h1>
+    <p>Calculated results come from the four fictional rows below. This page has no backend and makes no network calls.</p>
+    <p id="metric-definitions" class="hint">Metric definitions: orders is the sum of <code>orders</code>; revenue is the sum of <code>revenue_usd</code>. The region filter applies to both.</p>
+  </header>
+  <main>
+    <section class="metrics" aria-label="Summary">
+      <div class="metric"><span>Total orders</span><strong id="total-orders">20</strong></div>
+      <div class="metric"><span>Total revenue</span><strong id="total-revenue">$270.00</strong></div>
+    </section>
+    <section class="panel" aria-labelledby="filter-title">
+      <h2 id="filter-title">Filter and source</h2>
+      <div class="controls">
+        <label for="region-filter">Region
+          <select id="region-filter"><option value="All">All regions</option><option>North</option><option>South</option></select>
+        </label>
+        <label for="csv-file">Choose a CSV file
+          <input id="csv-file" type="file" accept=".csv,text/csv">
+        </label>
+      </div>
+      <p id="data-status" class="status" role="status">Showing 4 fictional records from sample.csv.</p>
+      <p id="csv-error" class="error" role="alert" hidden></p>
+    </section>
+    <section class="panel" aria-labelledby="table-title">
+      <h2 id="table-title">Orders</h2>
+      <p id="table-hint" class="hint">Focus the table region, then use Left/Right or Home/End to scroll horizontally.</p>
+      <div id="table-scroll" class="table-scroll" tabindex="0" role="region" aria-label="Order records" aria-describedby="table-hint">
+        <table><thead><tr><th scope="col">ID</th><th scope="col">Date</th><th scope="col">Region</th><th scope="col">Orders</th><th scope="col">Revenue (USD)</th></tr></thead><tbody id="rows"></tbody></table>
+      </div>
+    </section>
+    <section class="panel" aria-labelledby="chat-title">
+      <h2 id="chat-title">Ask this sample</h2>
+      <p class="hint">Deterministic demo. It supports exactly “Total orders” and “Total revenue”; it does not call an AI model.</p>
+      <form id="question-form" class="controls">
+        <label for="question">Question<input id="question" autocomplete="off"></label>
+        <button type="submit">Ask</button>
+      </form>
+      <p id="answer" class="chat-log" role="status" aria-live="polite">Ask a supported question to see a calculated answer.</p>
+    </section>
+  </main>
+  <script>
+    const sample = [
+      { id: "1", date: "2026-01-01", region: "North", orders: 5, revenue_usd: 60 },
+      { id: "2", date: "2026-01-01", region: "South", orders: 3, revenue_usd: 40 },
+      { id: "3", date: "2026-01-02", region: "North", orders: 7, revenue_usd: 100 },
+      { id: "4", date: "2026-01-02", region: "South", orders: 5, revenue_usd: 70 }
+    ];
+    const fields = ["id", "date", "region", "orders", "revenue_usd"];
+    let records = sample;
+    let sourceLabel = "sample.csv";
+    let loadedAt = "Bundled sample (source dates: 2026-01-01 to 2026-01-02)";
+    const region = document.querySelector("#region-filter");
+    const tableScroll = document.querySelector("#table-scroll");
+    const errorBox = document.querySelector("#csv-error");
+
+    function visibleRecords() { return records.filter(row => region.value === "All" || row.region === region.value); }
+    function render() {
+      const selected = visibleRecords();
+      const orders = selected.reduce((sum, row) => sum + row.orders, 0);
+      const revenue = selected.reduce((sum, row) => sum + row.revenue_usd, 0);
+      document.querySelector("#total-orders").textContent = String(orders);
+      document.querySelector("#total-revenue").textContent = `$${revenue.toFixed(2)}`;
+      document.querySelector("#rows").innerHTML = selected.map(row => `<tr><td>${escapeHtml(row.id)}</td><td>${escapeHtml(row.date)}</td><td>${escapeHtml(row.region)}</td><td>${row.orders}</td><td>${row.revenue_usd.toFixed(2)}</td></tr>`).join("");
+      document.querySelector("#data-status").textContent = `Showing ${selected.length} of ${records.length} fictional records; filter: ${region.value}; source: ${sourceLabel}; last loaded: ${loadedAt}.`;
+    }
+    function escapeHtml(value) { return String(value).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+    function parseCSV(text) {
+      const rows = []; let row = [], cell = "", quoted = false;
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i];
+        if (quoted) {
+          if (c === '"' && text[i + 1] === '"') { cell += '"'; i++; }
+          else if (c === '"') quoted = false;
+          else cell += c;
+        } else if (c === '"') {
+          if (cell !== "") throw new Error(`Unexpected quote near character ${i + 1}.`);
+          quoted = true;
+        } else if (c === ",") { row.push(cell); cell = ""; }
+        else if (c === "\n" || c === "\r") {
+          if (c === "\r" && text[i + 1] === "\n") i++;
+          row.push(cell); cell = "";
+          if (row.some(value => value.trim() !== "")) rows.push(row);
+          row = [];
+        } else cell += c;
+      }
+      if (quoted) throw new Error("Unclosed quoted field.");
+      row.push(cell); if (row.some(value => value.trim() !== "")) rows.push(row);
+      if (rows.length < 2) throw new Error("CSV needs a header and at least one data row.");
+      const headers = rows[0].map(value => value.trim());
+      if (headers.join(",") !== fields.join(",")) throw new Error(`Expected columns: ${fields.join(", ")}.`);
+      return rows.slice(1).map((values, i) => {
+        if (values.length !== fields.length) throw new Error(`Row ${i + 2} has ${values.length} columns; expected ${fields.length}.`);
+        const parsed = Object.fromEntries(fields.map((key, j) => [key, values[j].trim()]));
+        const orders = Number(parsed.orders), revenue = Number(parsed.revenue_usd);
+        if (!parsed.id || !/^\d{4}-\d{2}-\d{2}$/.test(parsed.date) || !parsed.region || !Number.isInteger(orders) || orders < 0 || !Number.isFinite(revenue) || revenue < 0) throw new Error(`Row ${i + 2} has an invalid ID, date, region, orders or revenue.`);
+        return { ...parsed, orders, revenue_usd: revenue };
+      });
+    }
+
+    region.addEventListener("change", render);
+    tableScroll.addEventListener("keydown", event => {
+      const step = Math.max(48, Math.floor(tableScroll.clientWidth * 0.6));
+      if (event.key === "ArrowRight") tableScroll.scrollLeft += step;
+      else if (event.key === "ArrowLeft") tableScroll.scrollLeft -= step;
+      else if (event.key === "Home") tableScroll.scrollLeft = 0;
+      else if (event.key === "End") tableScroll.scrollLeft = tableScroll.scrollWidth;
+      else return;
+      event.preventDefault();
+    });
+    document.querySelector("#csv-file").addEventListener("change", async event => {
+      const file = event.target.files[0]; if (!file) return;
+      try {
+        const next = parseCSV(await file.text());
+        records = next; sourceLabel = file.name; loadedAt = new Date().toISOString(); errorBox.hidden = true; errorBox.textContent = "";
+        region.value = "All"; render();
+      } catch (error) {
+        errorBox.textContent = `Could not load ${file.name}: ${error.message} Existing data is unchanged.`;
+        errorBox.hidden = false;
+      }
+    });
+    document.querySelector("#question-form").addEventListener("submit", event => {
+      event.preventDefault();
+      const q = document.querySelector("#question").value.trim().replace(/[?!.]+$/, "").toLowerCase();
+      const selected = visibleRecords();
+      const orders = selected.reduce((sum, row) => sum + row.orders, 0);
+      const revenue = selected.reduce((sum, row) => sum + row.revenue_usd, 0);
+      const rowIds = selected.map(row => row.id).join(", ") || "none";
+      const answer = q === "total orders" ? `Total orders: ${orders} (sum of orders for rows ${rowIds}; ${selected.length} visible records).`
+        : q === "total revenue" ? `Total revenue: $${revenue.toFixed(2)} (sum of revenue_usd for rows ${rowIds}; ${selected.length} visible records).`
+        : "Not supported by this sample. Ask “Total orders” or “Total revenue”. No model was called.";
+      document.querySelector("#answer").textContent = answer;
+    });
+    render();
+  </script>
+</body>
+</html>
