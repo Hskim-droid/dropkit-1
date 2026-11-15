@@ -35,3 +35,7 @@ Kit code and code examples are MIT licensed. Original documentation, prompts, re
 ## DropKit
 
 [Explore the kits and study notes](https://dropkit-contents.pages.dev/).
+
+## Shared query semantics
+
+Use [QUERY-CONTRACT.md](QUERY-CONTRACT.md) when extending a preview into a dashboard and assistant. The [synthetic query example](examples/query-contract/README.md) shares calculations across both views and demonstrates revisions, ambiguity and error handling. It is not production authentication or a model integration.

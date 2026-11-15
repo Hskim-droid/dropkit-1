@@ -16,3 +16,7 @@ Record each item as passed, failed, or not run, with actual evidence.
 12. Open the generated `dashboard.html` directly from disk with no local server, package, or network. Confirm embedded rows load, supported question intents calculate correctly, and an unsupported question is identified. Record browser and actual result. If direct opening fails, report the blocker instead of adding an unapproved dependency.
 
 List generated files, exact steps, untested items, and any services or costs. Request review before deploying an adapted application.
+
+## Query consistency
+
+Check shared metric definitions and source revisions, ambiguous periods, scope denial at the real data boundary, missing values, stale answers, corrected data and unsupported questions. Compare numeric results with an independently calculated reference. Client-only scope simulation does not validate authorization.

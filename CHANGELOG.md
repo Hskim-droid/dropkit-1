@@ -16,3 +16,7 @@
 - Specified separate MIT terms for code and CC BY 4.0 terms for original documentation, prompts, research notes, and fictional sample data.
 
 The v0.3 candidate is not a tagged release. The test report describes one sample output and does not establish compatibility with other workspaces or production readiness.
+
+## Unreleased — shared query example
+
+Add a query semantics contract and a synthetic local example with revision and error handling. Existing preview and CSV entry points remain unchanged.
