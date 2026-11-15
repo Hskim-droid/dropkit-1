@@ -21,3 +21,7 @@ The CSV files were assigned to the file input through Chrome DevTools Protocol; 
 No physical mobile device, screen reader, other browser, second AI coding workspace, model/API, database, authentication, real project, real data or production deployment was used. The report does not prove production readiness or universal workspace compatibility.
 
 The bundled example code uses the MIT license. This report and the fictional CSV use CC BY 4.0 under the notices in `LICENSE` and `LICENSE-DOCUMENTATION.md`.
+
+## Shared-query example — 2026-11-15
+
+The new local HTML example passed 13 automated Chromium checks: region totals, matching deterministic answers and source IDs, simulated scope denial, period clarification, corrected revision, missing values, reset, unsupported questions and document width at 320/390/1440px. LibreOffice 24.2.7.2 independently calculated North net 135 and South net 70 from the same synthetic amounts. No actual model, authenticated authorization, database or human-time improvement was tested.

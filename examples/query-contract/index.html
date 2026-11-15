@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Shared sales query — synthetic example</title>
+<style>:root{color-scheme:light}body{font:16px system-ui;max-width:48rem;margin:auto;padding:16px;background:#faf9f5;color:#171717}input,select,button{font:inherit;max-width:100%;padding:8px;box-sizing:border-box}pre{white-space:pre-wrap;overflow-wrap:anywhere}label{display:block;margin:12px 0}button{margin:4px 0}output{display:block;padding:12px;border:1px solid}</style>
+<h1>One calculation, two views</h1><p>Synthetic data. Deterministic answers. Scope checks here are a demonstration, not production security.</p>
+<label>Region <select id="region"><option>North</option><option>South</option></select></label>
+<label>Period <select id="period"><option value="2026-01">January 2026</option><option value="">Unspecified</option></select></label>
+<label>Simulated caller scope <select id="scope"><option value="all">All regions</option><option value="North">North only</option></select></label>
+<output id="dashboard" aria-live="polite"></output>
+<form id="chat"><label>Question <input id="question" value="net sales" autocomplete="off"></label><button>Ask</button></form><output id="answer" aria-live="polite">Ask about net sales.</output>
+<button id="revise">Apply synthetic correction</button> <button id="missing">Simulate missing value</button> <button id="reset">Reset</button>
+<h2>Answer evidence</h2><pre id="evidence"></pre>
+<script>
+const initial=[{id:'a',region:'North',gross:100,refund:10},{id:'b',region:'South',gross:70,refund:0},{id:'c',region:'North',gross:50,refund:5}];
+let rows=structuredClone(initial),revision='r1';const el=id=>document.getElementById(id);
+function query(){const region=el('region').value,period=el('period').value,scope=el('scope').value;
+ if(!period)return {error:'Clarify the period.'};if(scope!=='all'&&scope!==region)return {error:'Outside simulated caller scope.'};
+ const selected=rows.filter(r=>r.region===region);if(selected.some(r=>r.gross===null||r.refund===null))return {error:'Missing numeric value.'};
+ return {value:selected.reduce((s,r)=>s+r.gross-r.refund,0),unit:'USD',metric:'net-sales',formula:'gross minus refunds',period,region,revision,source_ids:selected.map(r=>r.id)};}
+function render(){const r=query();el('dashboard').textContent=r.error||`Net sales: USD ${r.value}`;el('evidence').textContent=JSON.stringify(r,null,2);el('answer').textContent='Context changed. Ask again.';}
+for(const id of ['region','period','scope'])el(id).onchange=render;
+el('chat').onsubmit=e=>{e.preventDefault();const r=el('question').value.trim().toLowerCase()==='net sales'?query():{error:'Unsupported question. Try net sales.'};el('answer').textContent=r.error||`Net sales: USD ${r.value} (${r.revision}; rows ${r.source_ids.join(', ')})`;};
+el('revise').onclick=()=>{rows=structuredClone(initial);rows[0].refund=20;revision='r2';render()};
+el('missing').onclick=()=>{rows[0].gross=null;render()};el('reset').onclick=()=>{rows=structuredClone(initial);revision='r1';render()};render();
+</script></html>
